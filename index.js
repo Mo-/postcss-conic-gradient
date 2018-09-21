@@ -5,7 +5,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 	
 	var colorTool = require('color');
 	var Canvas = require('pureimage');
-	const Datauri = require('datauri'),
+	const Datauri = require('datauri');
 	const datauri = new Datauri();
 	var π = Math.PI;
 	var ε = 0.00001;
