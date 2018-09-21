@@ -5,6 +5,8 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 	
 	var colorTool = require('color');
 	var Canvas = require('pureimage');
+	const Datauri = require('datauri'),
+	const datauri = new Datauri();
 	var π = Math.PI;
 	var ε = 0.00001;
 	var deg = π / 180;
@@ -119,7 +121,8 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 		},
 		
 		get png() {
-			return this.canvas.toDataURL();
+			// return this.canvas.toDataURL();
+			return datauri.format('.png', this.canvas).content;
 		},
 		
 		get r() {
