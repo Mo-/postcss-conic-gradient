@@ -123,7 +123,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 		get png() {
 			// return this.canvas.toDataURL();
 			console.log(this.canvas.data);
-			let img = datauri.format('.png', this.canvas.data).content;
+			let img = datauri.format('.png', this.canvas.data).base64;
 			console.log(img);
 			return img;
 		},
