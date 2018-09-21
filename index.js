@@ -11,8 +11,8 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 	var ε = 0.00001;
 	var deg = π / 180;
 	
-	var innerWidth = 1080;
-	var innerHeight = 1080;
+	var innerWidth = 64;//1080;
+	var innerHeight = 64;//1080;
 	
 	var _ = function(o) {
 		_.all.push(this);
@@ -124,8 +124,9 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 			// return this.canvas.toDataURL();
 			console.log(this.canvas.data);
 			console.log('-----------------');
-			console.log(this.canvas.data.data);
-			let img = datauri.format('.png', this.canvas.data).base64;
+			console.log(this.canvas.content);
+			datauri.format('.png', this.canvas.data);
+			let img = datauri.base64;
 			// console.log(img);
 			return img;
 		},
