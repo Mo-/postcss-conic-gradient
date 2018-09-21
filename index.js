@@ -260,7 +260,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 	var match = /(?:repeating-)?conic-gradient\(((?:\([^()]+\)|[^;()}])+?)\)/g;
 	
 	return function(css) {
-		css.eachDecl('background-image', function (decl) {
+		css.walkDecls('background-image', function (decl) {
 			var changed;
 			
 			var values = postcss.list.comma(decl.value).map(function (value) {
