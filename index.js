@@ -7,6 +7,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function(opts) {
 	var Canvas = require('pureimage');
 	var datauri = require('dauria');
 	var PNG = require('pngjs').PNG;
+	var uint32 = require('uint32');
 	var π = Math.PI;
 	var ε = 0.00001;
 	var deg = π / 180;
