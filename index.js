@@ -1,12 +1,11 @@
 var postcss = require('postcss');
 
-module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
+module.exports = postcss.plugin('postcss-conic-gradient', function(opts) {
 	opts = opts || {};
 	
 	var colorTool = require('color');
 	var Canvas = require('pureimage');
-	const Datauri = require('datauri');
-	const datauri = new Datauri();
+	var datauri = require('dauria');
 	var π = Math.PI;
 	var ε = 0.00001;
 	var deg = π / 180;
@@ -67,7 +66,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 			this.stops.push(last);
 		}
 		
-		this.stops.forEach(function(stop, i){
+		this.stops.forEach(function(stop, i) {
 			if (stop.pos === undefined) {
 				// Evenly space color stops with no position
 				for (var j = i + 1; this[j]; j++) {
@@ -107,7 +106,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 	
 	_.prototype = {
 		toString: function() {
-			return "url('" + this.dataURL + "')";
+			return 'url(\'' + this.dataURL + '\')';
 		},
 		
 		get dataURL() {
@@ -125,9 +124,8 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 			console.log(this.canvas.data);
 			console.log('-----------------');
 			console.log(this.canvas.content);
-			datauri.format('.png', this.canvas.data);
-			let img = datauri.base64;
-			// console.log(img);
+			let img  = datauri.getBase64DataURI(this.canvas.data, 'image/png');
+			console.log(img);
 			return img;
 		},
 		
@@ -160,7 +158,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 						
 						stopIndex++;
 						stop = this.stops[stopIndex];
-					} while(stop && stop !== prevStop && stop.pos === prevStop.pos);
+					} while (stop && stop !== prevStop && stop.pos === prevStop.pos);
 					
 					if (!stop) {
 						break;
@@ -168,14 +166,14 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 					
 					sameColor = prevStop.color + '' === stop.color + '' && prevStop !== stop;
 					
-					diff = prevStop.color.map(function(c, i){
+					diff = prevStop.color.map(function(c, i) {
 						return stop.color[i] - c;
 					});
 				}
 				
 				t = (i / 360 - prevStop.pos) / (stop.pos - prevStop.pos);
 				
-				var interpolated = sameColor ? stop.color : diff.map(function (d, i){
+				var interpolated = sameColor ? stop.color : diff.map(function(d, i) {
 					var ret = d * t + prevStop.color[i];
 					
 					return i < 3 ? ret & 255 : ret;
@@ -269,10 +267,10 @@ module.exports = postcss.plugin('postcss-conic-gradient', function (opts) {
 	var match = /(?:repeating-)?conic-gradient\(((?:\([^()]+\)|[^;()}])+?)\)/g;
 	
 	return function(css) {
-		css.walkDecls('background-image', function (decl) {
+		css.walkDecls('background-image', function(decl) {
 			var changed;
 			
-			var values = postcss.list.comma(decl.value).map(function (value) {
+			var values = postcss.list.comma(decl.value).map(function(value) {
 				if (match.test(value)) {
 					changed = true;
 					
