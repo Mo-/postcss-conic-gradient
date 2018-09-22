@@ -6,12 +6,13 @@ module.exports = postcss.plugin('postcss-conic-gradient', function(opts) {
 	var colorTool = require('color');
 	var Canvas = require('pureimage');
 	var datauri = require('dauria');
+	var PNG = require('pngjs').PNG;
 	var π = Math.PI;
 	var ε = 0.00001;
 	var deg = π / 180;
 	
-	var innerWidth = 64;//1080;
-	var innerHeight = 64;//1080;
+	var innerWidth = 16;//1080;
+	var innerHeight = 16;//1080;
 	
 	var _ = function(o) {
 		_.all.push(this);
@@ -121,10 +122,29 @@ module.exports = postcss.plugin('postcss-conic-gradient', function(opts) {
 		
 		get png() {
 			// return this.canvas.toDataURL();
-			console.log(this.canvas);
-			console.log('-----------------');
-			let img  = datauri.getBase64DataURI(this.canvas, 'image/png');
-			console.log(img);
+			// console.log(this.canvas);
+			// console.log('-----------------');
+			// console.log(this.Canvas);
+			
+			var png = new PNG({
+				width:this.canvas.width,
+				height:this.canvas.height
+			});
+			
+			for(var i=0; i<this.canvas.width; i++) {
+				for(var j=0; j<this.canvas.height; j++) {
+					var rgba = this.canvas.getPixelRGBA(i,j);
+					var n = (j*this.canvas.width+i)*4;
+					var bytes = uint32.getBytesBigEndian(rgba);
+					for(var k=0; k<4; k++) {
+						png.data[n+k] = bytes[k];
+					}
+				}
+			}
+			
+			png.pack();
+			console.log(png)
+			let img  = datauri.getBase64DataURI(png, 'image/png');
 			return img;
 		},
 		
