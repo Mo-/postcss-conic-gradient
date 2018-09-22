@@ -19,7 +19,8 @@
 		"postcss": "^6.0.23",
 		"datauri": "^1.1.0",
 		"dauria": "^2.0.0",
-		"pngjs": "^3.3.3"
+		"pngjs": "^3.3.3",
+		"uint32": "^0.2.1"
 	},
 	"devDependencies": {
 		"gulp-eslint": "^0.12.0",
