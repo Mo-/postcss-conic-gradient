@@ -142,10 +142,7 @@ module.exports = postcss.plugin('postcss-conic-gradient', function(opts) {
 					}
 				}
 			}
-			
-			png.pack();
-			console.log(png)
-			let img  = datauri.getBase64DataURI(png, 'image/png');
+			let img  = datauri.getBase64DataURI(png.pack(), 'image/png');
 			return img;
 		},
 		
